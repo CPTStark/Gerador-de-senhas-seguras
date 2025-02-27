@@ -16,10 +16,14 @@ botoes[1].onclick = aumentaTamanho;
 
 
 function diminuiTamanho(){
+    if(tamanhoSenha === 1) {
+        alert('O tamanho minimo da senha é 1')
+    }
+
     if (tamanhoSenha > 1){
-        //tamanhoSenha = tamanhoSenha-1;
         tamanhoSenha--;
     }
+    
     numeroSenha.textContent = tamanhoSenha;
     geraSenha()
 }
@@ -73,7 +77,11 @@ function classificaSenha(tamanhoAlfabeto){
         forcaSenha.classList.add('fraca');
     }
     const valorEntropia = document.querySelector('.entropia')
-    valorEntropia.textContent = "Um computador pode levar até " + Math.floor(2**entropia/(100e6*60*60*24)) + " dias para descobrir essa senha";
+    valorEntropia.innerHTML = 
+        `<p>
+            Um computador pode levar até <span class="dias">${Math.floor(2**entropia/(100e6*60*60*24))}</span> dias para descobrir essa senha.
+        </p>`
+    ;
 }
 
 copiaSenha.addEventListener('click', () => {
@@ -82,7 +90,7 @@ copiaSenha.addEventListener('click', () => {
     // Seleciona o conteúdo do campo senha
     campoSenha.select();''
     // Copia o conteúdo selecionado para a área de transferência
-    document.execCommand('copy');
+    navigator.clipboard.writeText(campoSenha.value);
     // Mensagem ou feedback para o usuário
     alert('Senha copiada para a área de transferência!');
-});
+}); 
